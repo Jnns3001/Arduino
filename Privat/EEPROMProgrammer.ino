@@ -13,19 +13,40 @@
 #define CHIP_EN 7 // active low
 
 void setAddress(int address, bool outputEnable) {
-  shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address);
-  shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address);
-  shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address);
+  shiftOut(SHIFT_DATA, SHIFT_CLK, LSBFIRST, address);
+  shiftOut(SHIFT_DATA, SHIFT_CLK, LSBFIRST, (address >> 8));
+  shiftOut(SHIFT_DATA, SHIFT_CLK, LSBFIRST, (address >> 16));
 
-  digitalWrite(SHIFT_LATCH, LOW);
-  digitalWrite(SHIFT_LATCH, HIGH);
-  digitalWrite(SHIFT_LATCH, LOW);
+  if(outputEnable){
+    digitalWrite(SHIFT_LATCH, LOW);
+    digitalWrite(SHIFT_LATCH, HIGH);
+    digitalWrite(SHIFT_LATCH, LOW);
+  }
+}
+
+void setData(byte data, bool outputEnable) {
+  shiftOut(SHIFT_DATA, SHIFT_CLK, LSBFIRST, data);
+
+  if(outputEnable){
+    digitalWrite(SHIFT_LATCH, LOW);
+    digitalWrite(SHIFT_LATCH, HIGH);
+    digitalWrite(SHIFT_LATCH, LOW);
+  }
 }
 
 
-void setup() {
-  // put your setup code here, to run once:
+void writeEEPROM(int address,
 
+
+
+
+
+void setup() {
+
+  pinMode(, OUTPUT);
+  pinMode(, OUTPUT);
+  pinMode(, OUTPUT);
+  pinMode(, OUTPUT);
 }
 
 void loop() {
