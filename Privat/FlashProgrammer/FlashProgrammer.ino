@@ -120,7 +120,10 @@ void printContents(int len) {
 
 void programData(byte data, int address){
   setIO(0);
-
+  
+  writeByte(0xAA, 0x5555);
+  writeByte(0x55, 0x2AAA);
+  writeByte(0xA0, 0x5555);
   writeByte(data, address);
   
   delayMicroseconds(30);
@@ -130,9 +133,14 @@ void programData(byte data, int address){
 void eraseChip(){
   setIO(0);
 
-  for(int addr = 0; addr <= 8192; addr ++){
-    programData(0xFF,addr);
-  }
+  writeByte(0xAA, 0x5555);
+  writeByte(0x55, 0x2AAA);
+  writeByte(0x80, 0x5555);
+  writeByte(0xAA, 0x5555);
+  writeByte(0x55, 0x2AAA);
+  writeByte(0x10, 0x5555);
+
+  delay(100);
 }
 
 
