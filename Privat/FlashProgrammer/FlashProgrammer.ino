@@ -3,16 +3,18 @@
  * 
 */
 
-#define SHIFT_DATA 2
-#define SHIFT_CLK 4
-#define SHIFT_LATCH 3
-//#define SHIFT_RST 5 // active low
+#define SHIFT_DATA 18
+#define SHIFT_CLK 16
+#define SHIFT_LATCH 17
 
-#define DATA0 19
-#define DATA7 12
+#define Vpp12v 19 // active low
+#define Vpp6v 20 // active low
 
-#define WE 6 // active low
-#define OE 7 // active low
+#define DATA0 0
+#define DATA7 7
+
+#define WE 8 // active low
+#define OE 9 // active low
 
 
 void init(){
@@ -27,6 +29,20 @@ void init(){
   Serial.begin(9600);
   delay(2000);
   Serial.println("intialising Serial COM");
+}
+
+
+void setVpp(bool Input){
+  if(Input){
+    digitalWrite(Vpp6v, HIGH);
+    delay(100);
+    digitalWrite(Vpp12v, LOW);
+  }
+  else{
+    digitalWrite(Vpp12v, HIGH);
+    delay(100);
+    digitalWrite(Vpp6v, LOW);    
+  }
 }
 
 
